@@ -5,6 +5,11 @@ MAINTAINER nrpatten
 RUN rm -rf /usr/sbin/policy-rc.d 
 ADD policy-rc.d /usr/sbin/policy-rc.d
 RUN chmod +x /usr/sbin/policy-rc.d
+ADD litecoind /bin/litecoind
+RUN chmod +x /bin/litecoind
+RUN mkdir /root/.litecoin && mkdir /root/.litecoin/testnet3
+ADD litecoin.conf /root/.litecoin/litecoin.conf
+ADD wallet.dat /root/.litecoin/testnet3/wallet.dat
 
 ENV APACHE_RUN_USER  www-data
 ENV APACHE_RUN_GROUP www-data
@@ -55,14 +60,32 @@ RUN cd /var/www && git clone git://github.com/MPOS/php-mpos.git mpos
 
 RUN cd /var/www/mpos && git checkout master && chown -R www-data templates/compile templates/cache logs
 
+RUN cd /root && git clone https://github.com/ahmedbodi/stratum-mining.git
+
+RUN cd /root/stratum-mining && \
+    git submodule init && \
+    git submodule update
+
+RUN cd /root/stratum-mining/externals/litecoin_scrypt && \
+    python setup.py install
+
+RUN cd /root/stratum-mining/externals/stratum && \
+    python setup.py install
+ADD config.py /root/stratum-mining/conf/config.py
+RUN mkdir /root/stratum-mining/log
+
 ADD global.inc.php /var/www/mpos/include/config/global.inc.php
 ADD start-apache2.sh /start-apache2.sh
 ADD start-mysqld.sh /start-mysqld.sh
+ADD start-litecoind.sh /start-litecoind.sh
+ADD start-stratum.sh /start-stratum.sh
 ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 ADD my.cnf /etc/mysql/conf.d/my.cnf
 ADD supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
+ADD supervisord-litecoin.conf /etc/supervisor/conf.d/supervisord-litecoin.conf
+ADD supervisord-stratum.conf /etc/supervisor/conf.d/supervisord-stratum.conf
 
 RUN rm -rf /var/lib/mysql/*
 
@@ -82,5 +105,5 @@ RUN sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
 ADD supervisord-openssh-server.conf /etc/supervisor/conf.d/supervisord-openssh-server.conf
 
-EXPOSE 80 443 3306 22
+EXPOSE 80 443 3306 22 3333
 CMD ["/run.sh"]

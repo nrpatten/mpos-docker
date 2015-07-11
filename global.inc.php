@@ -19,7 +19,7 @@ $config['skip_config_tests'] = false;
  * Unless you disable this, we'll do a check for a valid coin address on registration.
  *  https://github.com/MPOS/php-mpos/wiki/Config-Setup#check-for-valid-wallet-address
  */
-$config['check_valid_coinaddress'] = true;
+$config['check_valid_coinaddress'] = false;
 
 /**
  * Defines
@@ -67,8 +67,8 @@ $config['db']['name'] = 'mpos';
  **/
 $config['wallet']['type'] = 'http';
 $config['wallet']['host'] = 'localhost:19334';
-$config['wallet']['username'] = 'testnet';
-$config['wallet']['password'] = 'testnet';
+$config['wallet']['username'] = 'mpostest';
+$config['wallet']['password'] = 'mpostestnet';
 
 /**
  * Swiftmailer configuration
