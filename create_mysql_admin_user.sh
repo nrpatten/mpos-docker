@@ -17,7 +17,7 @@ echo "=> Creating MySQL admin user with ${_word} password"
 mysql -uroot -e "CREATE USER 'admin'@'%' IDENTIFIED BY '$PASS'"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION"
 mysql -uroot -e "create database mpos"
-mysql mpos < /var/www/html/mpos/sql/000_base_structure.sql
+mysql mpos < /var/www/mpos/sql/000_base_structure.sql
 
 echo "=> Done!"
 
