@@ -1,4 +1,4 @@
-FROM ubuntu:mpos
+FROM nrpatten/ubuntu-mpos-base:latest
 
 MAINTAINER nrpatten
 
