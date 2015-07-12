@@ -81,6 +81,7 @@ ADD start-mysqld.sh /start-mysqld.sh
 ADD start-cron.sh /start-cron.sh
 ADD start-litecoind.sh /start-litecoind.sh
 ADD start-stratum.sh /start-stratum.sh
+ADD start-memcached.sh /start-memcached.sh
 ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 ADD my.cnf /etc/mysql/conf.d/my.cnf
@@ -89,6 +90,7 @@ ADD supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 ADD supervisord-cron.conf /etc/supervisor/conf.d/supervisord-cron.conf
 ADD supervisord-litecoin.conf /etc/supervisor/conf.d/supervisord-litecoin.conf
 ADD supervisord-stratum.conf /etc/supervisor/conf.d/supervisord-stratum.conf
+ADD supervisord-memcached.conf /etc/supervisor/conf.d/supervisord-memcached.conf
 ADD cron /etc/cron.d/cron
 RUN chmod 0644 /etc/cron.d/cron && chmod +x /etc/cron.d/cron
 
