@@ -15,3 +15,5 @@ Git repo and docker repo
  * `docker ps`
  * And add your `CONTAINER ID`
  * eg: `docker exec -it 013ca0ec7315 /bin/bash`
+
+**Please note all data will be lost if you destroy this container.**
