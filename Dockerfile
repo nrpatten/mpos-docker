@@ -25,6 +25,7 @@ RUN apt-get update -qq && apt-get install -y apt-utils perl --no-install-recomme
 RUN apt-get install -y --force-yes \
     build-essential \
     apache2 \
+    cron \
     libapache2-mod-php5 \
     pwgen \
     supervisor \
@@ -77,6 +78,7 @@ RUN mkdir /root/stratum-mining/log
 ADD global.inc.php /var/www/mpos/include/config/global.inc.php
 ADD start-apache2.sh /start-apache2.sh
 ADD start-mysqld.sh /start-mysqld.sh
+ADD start-cron.sh /start-cron.sh
 ADD start-litecoind.sh /start-litecoind.sh
 ADD start-stratum.sh /start-stratum.sh
 ADD run.sh /run.sh
@@ -84,8 +86,11 @@ RUN chmod 755 /*.sh
 ADD my.cnf /etc/mysql/conf.d/my.cnf
 ADD supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
+ADD supervisord-cron.conf /etc/supervisor/conf.d/supervisord-cron.conf
 ADD supervisord-litecoin.conf /etc/supervisor/conf.d/supervisord-litecoin.conf
 ADD supervisord-stratum.conf /etc/supervisor/conf.d/supervisord-stratum.conf
+ADD cron /etc/cron.d/cron
+RUN chmod 0644 /etc/cron.d/cron && chmod +x /etc/cron.d/cron
 
 RUN rm -rf /var/lib/mysql/*
 
