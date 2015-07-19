@@ -1,6 +1,7 @@
 MPOS Docker Testing Container.
 
-Please note all data will be lost if you destroy this container
+Please note all data will be lost if you destroy this container.    
+This container is for testing only do not use it in production.
 
     Install:
         docker pull nrpatten/mpos-docker
@@ -42,4 +43,10 @@ Build your own Git repo and docker repo
         And add your CONTAINER ID
         eg: docker exec -it 013ca0ec7315 /bin/bash
         
-This container is for testing only do not use it in production.
+
+
+|  **REPOSITORY** | **TAG** | **IMAGE ID** | **CREATED** | **VIRTUAL SIZE** |
+|-----------------|---------|--------------|-------------|-----------------------------------|
+|nrpatten/mpos              | latest       |  mpos       |  About an hour ago  |   871.7 MB  |
+|nrpatten/ubuntu-mpos-base  | latest       |  mpos-base  |  About an hour ago  |   164.3 MB  |
+
